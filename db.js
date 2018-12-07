@@ -8,7 +8,7 @@ var pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'fy121212', 
-    database: 'app_thy'
+    database: 'app_BYpaper'
 });
 
 var DB = {
@@ -21,7 +21,7 @@ var DB = {
         con.release();
       });
   },
-  'App': function(req,res,sheet_name) {
+  'select': function(req,res,sheet_name) {
     pool.getConnection(function(err, con) {
         if (err) throw err;
         con.query(`SELECT * FROM ${sheet_name}`, function(err, result) {
