@@ -12,19 +12,19 @@ var pool = mysql.createPool({
 });
 
 var DB = {
-  'start': function(req,res) {
+  'select': function(req,res,sheet_name) {
     pool.getConnection(function(err, con) {
         if (err) throw err;
-        con.query("SELECT * FROM start", function(err, result) {
+        con.query(`SELECT * FROM ${sheet_name}`, function(err, result) {
             return res.jsonp(result);
         });
         con.release();
       });
   },
-  'select': function(req,res,sheet_name) {
+  'col': function(req,res,table_name) {
     pool.getConnection(function(err, con) {
         if (err) throw err;
-        con.query(`SELECT * FROM ${sheet_name}`, function(err, result) {
+        con.query(`select COLUMN_NAME from information_schema.COLUMNS where table_name = '${table_name}' and table_schema = 'app_BYpaper'`, function(err, result) {
             return res.jsonp(result);
         });
         con.release();
