@@ -1,9 +1,12 @@
 ﻿const express = require("express");
+//直接获取post请求体中的参数
 const multipart = require('connect-multiparty');
 const DB = require("./db");
+const method = require("./method");
 
 const router = express.Router();
 const multipartMiddleware = multipart();
+
 
 router.get("/select", (req, res) => {
   const sheet_name = req.query.sheet_name;
@@ -16,7 +19,11 @@ router.get("/selectColName", (req, res) => {
 });
 
 router.post('/formdata', multipartMiddleware, (req, res) => {
-  res.send(req.body);
+  DB.postToCompletion(req, res);
+});
+
+router.post('/image', (req, res) => {
+  method.upload(req,res);
 });
 
 module.exports = router;
