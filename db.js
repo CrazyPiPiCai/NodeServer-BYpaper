@@ -49,7 +49,25 @@ const DB = {
       });
       con.release();
     });
-  }
+  },
+  imageToCompletion: function(fields,fileUrl) {
+    pool.getConnection(function(err, con) {
+      if (err) throw err;
+      con.query(
+          `UPDATE qualityFeedback 
+               SET data = CASE ID 
+                   WHEN 1 THEN '${fields.data1}'
+                   WHEN 2 THEN '${fields.data2}'
+                   WHEN 3 THEN '${fields.data3}'
+                   WHEN 4 THEN '${fields.data4}'
+                   WHEN 5 THEN '${fileUrl}'
+               END
+           WHERE ID IN (1,2,3,4,5);`, function(err, results) {
+        if (err) throw err;;
+      });
+      con.release();
+    });
+  },
 };
 
 exports = module.exports = DB;

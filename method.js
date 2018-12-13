@@ -2,6 +2,7 @@
 const formidable = require("formidable");
 const path = require("path");
 const fs = require("fs");
+const DB = require("./db");
 
 const method = {
   upload: (req, res) => {
@@ -27,6 +28,7 @@ const method = {
             res.json({ code: -1, message: "操作失败" });
           } else {
             const fileUrl = "http://localhost:3000/upload/image/" + fileName;
+            DB.imageToCompletion(fields,fileUrl);
             res.json({ code: 0, fileUrl: fileUrl });
           }
         });
