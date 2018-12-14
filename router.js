@@ -13,6 +13,12 @@ router.get("/select", (req, res) => {
   DB.select(req,res,sheet_name);
 });
 
+router.get("/secondDropdown", (req, res) => {
+  const sheet_name = req.query.sheet_name;
+  const filter = req.query.filter
+  DB.secondDropdown(req,res,sheet_name,filter);
+});
+
 router.get("/selectColName", (req, res) => {
   const table_name = req.query.table_name;
   DB.col(req,res,table_name);

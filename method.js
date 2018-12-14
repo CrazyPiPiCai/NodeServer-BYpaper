@@ -34,17 +34,6 @@ const method = {
         });
       }
     });
-  },
-  // 发送文件
-  sendfile: (req, res, next) => {
-    // console.log(req.params)
-    const curfile = path.resolve(
-      __dirname,
-      "../upload/" + req.params.imagename
-    );
-    // console.log(curfile)
-    res.status(200).sendFile(curfile);
-    // return next()
   }
 };
 
