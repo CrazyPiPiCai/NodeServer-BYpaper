@@ -7,10 +7,16 @@ const method = require("./method");
 const router = express.Router();
 const multipartMiddleware = multipart();
 
-
+//信息沟通的接口
 router.get("/select", (req, res) => {
   const sheet_name = req.query.sheet_name;
   DB.select(req,res,sheet_name);
+});
+
+router.get("/selectLast", (req, res) => {
+  const sheet_name = req.query.sheet_name;
+  console.log(sheet_name);
+  DB.selectLast(req,res,sheet_name);
 });
 
 router.get("/secondDropdown", (req, res) => {

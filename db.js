@@ -21,6 +21,15 @@ const DB = {
       con.release();
     });
   },
+  selectLast: function(req, res, sheet_name) {
+    pool.getConnection(function(err, con) {
+      if (err) throw err;
+      con.query(`SELECT * FROM ${sheet_name} WHERE id=(SELECT max(id) FROM ${sheet_name})`, function(err, result) {
+        return res.jsonp(result);
+      });
+      con.release();
+    });
+  },
   secondDropdown: function(req, res, sheet_name, filter) {
     pool.getConnection(function(err, con) {
       if (err) throw err;
