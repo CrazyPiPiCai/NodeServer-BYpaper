@@ -25,7 +25,7 @@ router.get("/selectColName", (req, res) => {
 });
 
 router.post('/formdata', multipartMiddleware, (req, res) => {
-  DB.postToCompletion(req, res);
+  DB.textToCompletionPlus(req, res);
 });
 
 router.post('/image', (req, res) => {

@@ -28,7 +28,7 @@ const method = {
             res.json({ code: -1, message: "操作失败" });
           } else {
             const fileUrl = "http://localhost:3000/upload/image/" + fileName;
-            DB.imageToCompletion(fields,fileUrl);
+            DB.imageToQualityPlus(fields,fileUrl);
             res.json({ code: 0, fileUrl: fileUrl });
           }
         });

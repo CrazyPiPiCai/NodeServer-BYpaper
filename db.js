@@ -24,9 +24,12 @@ const DB = {
   secondDropdown: function(req, res, sheet_name, filter) {
     pool.getConnection(function(err, con) {
       if (err) throw err;
-      con.query(`SELECT dataSource FROM ${sheet_name} t1 WHERE t1.ship='${filter}'`, function(err, result) {
-        return res.jsonp(result);
-      });
+      con.query(
+        `SELECT dataSource FROM ${sheet_name} t1 WHERE t1.ship='${filter}'`,
+        function(err, result) {
+          return res.jsonp(result);
+        }
+      );
       con.release();
     });
   },
@@ -42,28 +45,30 @@ const DB = {
       con.release();
     });
   },
-  postToCompletion: function(req, res) {
+  textToCompletion: function(req, res) {
     pool.getConnection(function(err, con) {
       if (err) throw err;
       con.query(
-          `UPDATE completionFeedback 
+        `UPDATE completionFeedback 
                SET evaluate = CASE ID 
                    WHEN 1 THEN '${req.body.data1}'
                    WHEN 2 THEN '${req.body.data2}'
                    WHEN 3 THEN '${req.body.data3}'
                    WHEN 4 THEN '${req.body.data4}'
                END
-           WHERE ID IN (1,2,3,4);`, function(err, results) {
-        return res.send('提交成功！');
-      });
+           WHERE ID IN (1,2,3,4);`,
+        function(err, results) {
+          return res.send("提交成功！");
+        }
+      );
       con.release();
     });
   },
-  imageToCompletion: function(fields,fileUrl) {
+  imageToQuality: function(fields, fileUrl) {
     pool.getConnection(function(err, con) {
       if (err) throw err;
       con.query(
-          `UPDATE qualityFeedback 
+        `UPDATE qualityFeedback 
                SET data = CASE ID 
                    WHEN 1 THEN '${fields.data1}'
                    WHEN 2 THEN '${fields.data2}'
@@ -71,12 +76,42 @@ const DB = {
                    WHEN 4 THEN '${fields.data4}'
                    WHEN 5 THEN '${fileUrl}'
                END
-           WHERE ID IN (1,2,3,4,5);`, function(err, results) {
-        if (err) throw err;;
-      });
+           WHERE ID IN (1,2,3,4,5);`,
+        function(err, results) {
+          if (err) throw err;
+        }
+      );
       con.release();
     });
   },
+  textToCompletionPlus: function(req, res) {
+    pool.getConnection(function(err, con) {
+      if (err) throw err;
+      con.query(
+        `INSERT INTO completionFeedback_data(one,two,three,four,five,six) VALUES('${
+          req.body.data1
+        }','${req.body.data2}','${req.body.data3}','${req.body.data4}','${req.body.data5}','${req.body.data6}')`,
+        function(err, results) {
+          return res.send("提交成功！");
+        }
+      );
+      con.release();
+    });
+  },
+  imageToQualityPlus: function(fields, fileUrl) {
+    pool.getConnection(function(err, con) {
+      if (err) throw err;
+      con.query(
+        `INSERT INTO qulityFeedback_data(ship,section,time,people,photo) VALUES('${
+          fields.data1
+        }','${fields.data2}','${fields.data3}','${fields.data4}','${fileUrl}')`,
+        function(err, results) {
+          if (err) throw err;
+        }
+      );
+      con.release();
+    });
+  }
 };
 
 exports = module.exports = DB;
