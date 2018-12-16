@@ -38,4 +38,10 @@ router.post('/image', (req, res) => {
   method.upload(req,res);
 });
 
+//搜索
+router.get('/search', (req, res) => {
+  const quest = req.query.quest;
+  DB.request(req,res,quest);
+});
+
 module.exports = router;

@@ -120,6 +120,15 @@ const DB = {
       );
       con.release();
     });
+  },
+  request: function(req,res,quest) {
+    pool.getConnection(function(err, con) {
+      if (err) throw err;
+      con.query(`SELECT * FROM qulityFeedback_data WHERE concat(ship,section,time,people,photo) like '%${quest}%'`, function(err, result) {
+        return res.jsonp(result);
+      });
+      con.release();
+    });
   }
 };
 
