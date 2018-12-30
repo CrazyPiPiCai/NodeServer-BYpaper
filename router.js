@@ -15,7 +15,6 @@ router.get("/select", (req, res) => {
 
 router.get("/selectLast", (req, res) => {
   const sheet_name = req.query.sheet_name;
-  console.log(sheet_name);
   DB.selectLast(req,res,sheet_name);
 });
 
@@ -38,10 +37,18 @@ router.post('/image', (req, res) => {
   method.upload(req,res);
 });
 
-//搜索
+//综合搜索
 router.get('/search', (req, res) => {
   const quest = req.query.quest;
   DB.request(req,res,quest);
+});
+
+//图片搜索
+router.get('/searchPhoto', (req, res) => {
+  const ship = req.query.ship;
+  const section = req.query.section;
+  const time = req.query.time;
+  DB.searchPhoto(req,res,ship,section,time);
 });
 
 module.exports = router;

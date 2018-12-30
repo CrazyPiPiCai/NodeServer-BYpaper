@@ -129,7 +129,26 @@ const DB = {
       });
       con.release();
     });
-  }
+  },
+  searchPhoto: function(req,res,ship,section,time) {
+    pool.getConnection(function(err, con) {
+      if (err) throw err;
+      var sql = 'SELECT photo FROM qulityFeedback_data WHERE 1=1';
+      if(ship!=''){
+        sql = sql + ' AND ship=' + `'${ship}'`;
+      }
+      if(section!=''){
+        sql = sql + ' AND section=' + `'${section}'`;
+      }
+      if(time!=''){
+        sql = sql + ' AND time=' + `'${time}'`;
+      }
+      con.query(sql, function(err, result) {
+        return res.jsonp(result);
+      });
+      con.release();
+    });
+  },
 };
 
 exports = module.exports = DB;
